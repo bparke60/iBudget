@@ -2,8 +2,8 @@ import SwiftUI
 
 struct SecurityCenterView: View {
     @EnvironmentObject var viewModel: BudgetViewModel
-    let isUnlocked: Bool
-    
+    @Binding var isUnlocked: Bool
+
     var body: some View {
         NavigationView {
             List {
@@ -15,9 +15,9 @@ struct SecurityCenterView: View {
             .navigationTitle("Security Center")
         }
     }
-    
+
     // MARK: - Sections
-    
+
     private var statusSection: some View {
         Section("Status") {
             HStack {
@@ -26,14 +26,14 @@ struct SecurityCenterView: View {
                 Text(isUnlocked ? "Unlocked" : "Locked")
                     .foregroundColor(isUnlocked ? .green : .secondary)
             }
-            
+
             HStack {
                 Text("Security Level")
                 Spacer()
                 Text(viewModel.securityStatus.rawValue)
                     .foregroundColor(colorForStatus())
             }
-            
+
             HStack {
                 Text("Failed Login Attempts")
                 Spacer()
@@ -41,7 +41,7 @@ struct SecurityCenterView: View {
             }
         }
     }
-    
+
     private var loginActivitySection: some View {
         Section("Recent Login Activity") {
             if viewModel.failedLogins.isEmpty {
@@ -66,12 +66,12 @@ struct SecurityCenterView: View {
             }
         }
     }
-    
+
     private var dataProtectionSection: some View {
         Section("Data Protection") {
             Text("Expenses are exported using AES-256 authenticated encryption before being sent (simulated) to a cloud endpoint.")
                 .font(.footnote)
-            
+
             if let encrypted = viewModel.encryptedExport {
                 Text("Last secure export size: \(encrypted.count) bytes")
                     .font(.footnote)
@@ -83,7 +83,7 @@ struct SecurityCenterView: View {
             }
         }
     }
-    
+
     private var usageTipsSection: some View {
         Section("Secure Usage Tips") {
             Text("Log out when you are done, especially on shared devices.")
@@ -91,9 +91,9 @@ struct SecurityCenterView: View {
             Text("Review login activity regularly for unusual patterns.")
         }
     }
-    
+
     // MARK: - Helpers
-    
+
     private func colorForStatus() -> Color {
         switch viewModel.securityStatus {
         case .normal:
