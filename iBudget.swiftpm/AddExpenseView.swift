@@ -20,7 +20,7 @@ struct AddExpenseView: View {
                 
                 Section("Amount") {
                     TextField("Amount in USD", text: $amount)
-                        .keyboardType(.decimalPad)
+                        .keyboardType(.numbersAndPunctuation)
                 }
                 
                 Section("Date") {
